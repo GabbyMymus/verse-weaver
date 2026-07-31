@@ -24,8 +24,16 @@ export default function ViewerView({
     const poemText = `A Poem for ${recipient}\n${occasion}\n\n${verses.filter((v) => v.trim()).join('\n\n---\n\n')}`;
     navigator.clipboard.writeText(poemText);
     toast({
-      title: 'Poem copied!',
+      title: 'Poem copied ✦',
       description: 'Your beautiful verse is ready to share.',
+    });
+  };
+
+  const shareLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: 'Link copied ♡',
+      description: 'Anyone with this link can read your poem.',
     });
   };
 
@@ -44,7 +52,14 @@ export default function ViewerView({
             {occasion} • {mood}
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap justify-center">
+          <button
+            onClick={shareLink}
+            className="px-6 py-2 bg-secondary text-secondary-foreground rounded-full font-ui text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105"
+            data-testid="button-share-link"
+          >
+            ✦ Share Link
+          </button>
           <button
             onClick={copyPoem}
             className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-ui text-sm font-medium hover:bg-accent hover:shadow-lg transition-all duration-300 hover:scale-105"
@@ -78,7 +93,7 @@ export default function ViewerView({
               {currentPage > 0 ? (
                 <div className="w-full h-full bg-card paper-texture rounded-l-2xl shadow-xl border-r-0 border border-card-border p-8 flex flex-col">
                   <div className="flex-1 flex items-center justify-center">
-                    <pre className="font-display text-xl leading-relaxed text-foreground whitespace-pre-wrap text-center max-w-md">
+                    <pre className="font-handwriting text-2xl leading-relaxed text-foreground whitespace-pre-wrap text-center max-w-md">
                       {verses[currentPage - 1] || ''}
                     </pre>
                   </div>
@@ -98,7 +113,7 @@ export default function ViewerView({
             <div className="w-1/2 h-full flex items-center justify-center pl-2">
               <div className="w-full h-full bg-card paper-texture rounded-r-2xl shadow-xl border-l-0 border border-card-border p-8 flex flex-col">
                 <div className="flex-1 flex items-center justify-center">
-                  <pre className="font-display text-xl leading-relaxed text-foreground whitespace-pre-wrap text-center max-w-md">
+                  <pre className="font-handwriting text-2xl leading-relaxed text-foreground whitespace-pre-wrap text-center max-w-md">
                     {verses[currentPage] || ''}
                   </pre>
                 </div>
@@ -113,7 +128,7 @@ export default function ViewerView({
           <div className="md:hidden w-full h-full flex items-center justify-center">
             <div className="w-full h-full bg-card paper-texture rounded-2xl shadow-xl border border-card-border p-6 flex flex-col">
               <div className="flex-1 flex items-center justify-center">
-                <pre className="font-display text-lg leading-relaxed text-foreground whitespace-pre-wrap text-center">
+                <pre className="font-handwriting text-xl leading-relaxed text-foreground whitespace-pre-wrap text-center">
                   {verses[currentPage] || ''}
                 </pre>
               </div>
