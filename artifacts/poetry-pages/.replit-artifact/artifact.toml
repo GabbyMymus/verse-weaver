@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Poetry Pages"
+version = "1.0.0"
+id = "artifacts/poetry-pages"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25196
+
+[services.development]
+run = "pnpm --filter @workspace/poetry-pages run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/poetry-pages", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/poetry-pages/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25196"
+BASE_PATH = "/"
